@@ -30,11 +30,14 @@
       <div class="titulo-divisor">⚔&nbsp;&nbsp;&nbsp;⚔</div>
       <p class="titulo-historia">
         O Castelo de Drácula ressurge entre as sombras.<br>
-        Selos mágicos bloqueiam cada câmara.<br>
-        Decifre as sequências numéricas e avance.<br>
+        Selos mágicos bloqueiam cada câmara — agora mais complexos!<br>
+        Decifre progressões aritméticas, geométricas e polinomiais.<br>
         Apenas o digno pode derrotar o senhor das trevas.
       </p>
       <button class="btn-gotico" id="btn-iniciar">▶ INICIAR JORNADA</button>
+      <div class="titulo-links">
+        <a href="docs.html" class="link-docs">📖 Documentação Matemática</a>
+      </div>
     </div>
 
     <div class="velas-linha velas-rodape" aria-hidden="true">
@@ -47,12 +50,12 @@
   </div>
 
   <!-- ══════════════════════════════════════════════════════════
-       TELA DO JOGO — Console no estilo Nintendo DS
+       TELA DO JOGO
        ══════════════════════════════════════════════════════════ -->
   <div id="tela-jogo" class="tela">
     <div class="ds-console">
 
-      <!-- Metade superior (tela de cima) -->
+      <!-- Metade superior -->
       <div class="ds-metade-superior">
         <div class="ds-camera" aria-hidden="true"></div>
         <div class="ds-tela ds-tela-superior">
@@ -60,8 +63,9 @@
           <div class="conteudo-superior" id="conteudo-superior">
 
             <div class="sala-cabecalho">
-              <span class="sala-badge" id="sala-badge">CÂMARA 1 / 8</span>
+              <span class="sala-badge" id="sala-badge">CÂMARA 1 / 12</span>
               <span class="sala-nome" id="sala-nome">—</span>
+              <span class="sala-tipo" id="sala-tipo">PA</span>
             </div>
 
             <div class="sala-historia" id="sala-historia">...</div>
@@ -75,6 +79,11 @@
               </div>
             </div>
 
+            <!-- Mini gráfico de visualização -->
+            <div class="grafico-container">
+              <canvas id="grafico-canvas" width="400" height="80"></canvas>
+            </div>
+
           </div>
         </div>
       </div>
@@ -84,7 +93,7 @@
         <div class="ds-dobradica-interna"></div>
       </div>
 
-      <!-- Metade inferior (tela de baixo + controles decorativos) -->
+      <!-- Metade inferior -->
       <div class="ds-metade-inferior">
         <div class="ds-tela ds-tela-inferior">
           <div class="scanlines" aria-hidden="true"></div>
@@ -102,11 +111,11 @@
               </div>
               <div class="hud-bloco hud-bloco-direita">
                 <div class="hud-rotulo">DICA</div>
-                <button class="btn-dica" id="btn-dica" title="Revelar a diferença comum">💡</button>
+                <button class="btn-dica" id="btn-dica" title="Revelar informação do padrão">💡</button>
               </div>
             </div>
 
-            <!-- Input de resposta -->
+            <!-- Input -->
             <div class="input-linha">
               <input
                 type="number"
@@ -126,7 +135,7 @@
           </div>
         </div>
 
-        <!-- Botões decorativos do DS -->
+        <!-- Botões decorativos -->
         <div class="ds-controles" aria-hidden="true">
           <div class="ds-dpad">
             <div class="dpad-h"></div>
@@ -139,8 +148,8 @@
         </div>
       </div>
 
-    </div><!-- /.ds-console -->
-  </div><!-- /#tela-jogo -->
+    </div>
+  </div>
 
   <!-- ══════════════════════════════════════════════════════════
        GAME OVER
@@ -174,10 +183,33 @@
       <p class="overlay-pontos">
         Pontuação Final: <span id="vitoria-pontos">00000</span>
       </p>
-      <button class="btn-gotico" id="btn-jogar-novamente">▶ JOGAR NOVAMENTE</button>
+      <div class="overlay-botoes">
+        <button class="btn-gotico" id="btn-ver-historico">📜 HISTÓRICO</button>
+        <button class="btn-gotico" id="btn-jogar-novamente">▶ JOGAR NOVAMENTE</button>
+      </div>
     </div>
   </div>
 
+  <!-- ══════════════════════════════════════════════════════════
+       HISTÓRICO / ANÁLISE
+       ══════════════════════════════════════════════════════════ -->
+  <div id="tela-historico" class="tela">
+    <div class="painel-historico">
+      <h2 class="historico-titulo">📜 Análise Histórica</h2>
+
+      <div class="historico-stats" id="historico-stats"></div>
+
+      <div class="historico-grafico-container">
+        <canvas id="historico-canvas" width="500" height="150"></canvas>
+      </div>
+
+      <div class="historico-lista" id="historico-lista"></div>
+
+      <button class="btn-gotico" id="btn-voltar-titulo">↩ VOLTAR AO INÍCIO</button>
+    </div>
+  </div>
+
+  <script src="engine.js"></script>
   <script src="game.js"></script>
 </body>
 </html>

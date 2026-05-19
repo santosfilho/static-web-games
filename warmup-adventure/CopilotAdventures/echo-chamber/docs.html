@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentação — Câmara do Eco</title>
+  <style>
+    :root {
+      --preto: #07070d;
+      --roxo-escuro: #130622;
+      --vm-brilho: #c0392b;
+      --ouro: #ffd700;
+      --ouro-escuro: #9a7000;
+      --prata: #a8a8c0;
+      --branco: #ececf4;
+      --verde: #00e878;
+      --fonte: "Courier New", Courier, "Lucida Console", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--fonte);
+      background: linear-gradient(180deg, #0a0416 0%, var(--preto) 100%);
+      color: var(--branco);
+      line-height: 1.9;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    /* ─── Header ─── */
+    .doc-header {
+      text-align: center;
+      margin-bottom: 50px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid var(--ouro-escuro);
+    }
+    .doc-header h1 {
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      color: var(--vm-brilho);
+      text-shadow: 0 0 22px rgba(192,57,43,0.6);
+      margin-bottom: 8px;
+    }
+    .doc-header p {
+      color: var(--prata);
+      font-size: 0.85rem;
+    }
+    .doc-header a {
+      color: var(--ouro);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--ouro-escuro);
+    }
+    .doc-header a:hover { color: #fff; }
+
+    /* ─── Nav ─── */
+    nav {
+      margin-bottom: 40px;
+      padding: 16px 20px;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--ouro-escuro);
+      border-radius: 6px;
+    }
+    nav h2 {
+      font-size: 0.85rem;
+      color: var(--ouro);
+      margin-bottom: 10px;
+    }
+    nav ul { list-style: none; }
+    nav li { margin-bottom: 6px; }
+    nav a {
+      color: var(--prata);
+      text-decoration: none;
+      font-size: 0.8rem;
+    }
+    nav a:hover { color: var(--ouro); }
+
+    /* ─── Sections ─── */
+    section {
+      margin-bottom: 50px;
+      padding: 24px;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(154,112,0,0.2);
+      border-radius: 6px;
+    }
+    section h2 {
+      font-size: 1.1rem;
+      color: var(--ouro);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--ouro-escuro);
+    }
+    section h3 {
+      font-size: 0.9rem;
+      color: var(--vm-brilho);
+      margin: 20px 0 10px;
+    }
+    p, li {
+      font-size: 0.8rem;
+      color: #b0b0cc;
+      margin-bottom: 10px;
+    }
+    ul, ol {
+      padding-left: 24px;
+      margin-bottom: 12px;
+    }
+
+    /* ─── Code blocks ─── */
+    .formula-box {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--ouro-escuro);
+      border-radius: 4px;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: 0.85rem;
+      color: var(--ouro);
+      overflow-x: auto;
+    }
+    .formula-box .label {
+      display: block;
+      font-size: 0.65rem;
+      color: var(--prata);
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+
+    code {
+      background: rgba(0,0,0,0.4);
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: var(--verde);
+      font-size: 0.78rem;
+    }
+
+    pre {
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(154,112,0,0.2);
+      border-radius: 4px;
+      padding: 14px;
+      overflow-x: auto;
+      margin: 14px 0;
+      font-size: 0.75rem;
+      color: var(--verde);
+      line-height: 1.7;
+    }
+
+    /* ─── Table ─── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0;
+      font-size: 0.75rem;
+    }
+    th, td {
+      border: 1px solid rgba(154,112,0,0.3);
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background: rgba(154,112,0,0.15);
+      color: var(--ouro);
+    }
+    td { color: #b0b0cc; }
+
+    /* ─── Badges ─── */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 0.65rem;
+      border-radius: 3px;
+      letter-spacing: 1px;
+    }
+    .badge-pa   { background: rgba(255,215,0,0.15); color: var(--ouro); border: 1px solid var(--ouro-escuro); }
+    .badge-pg   { background: rgba(0,232,120,0.12); color: var(--verde); border: 1px solid #006830; }
+    .badge-poli { background: rgba(192,57,43,0.15); color: var(--vm-brilho); border: 1px solid #7a0000; }
+
+    /* ─── Footer ─── */
+    footer {
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid var(--ouro-escuro);
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--prata);
+    }
+    footer a { color: var(--ouro); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- ─── Header ─── -->
+    <header class="doc-header">
+      <h1>📖 Documentação Matemática</h1>
+      <p>Câmara do Eco — A Maldição dos Números</p>
+      <p><a href="game.html">← Voltar ao Jogo</a></p>
+    </header>
+
+    <!-- ─── Navegação ─── -->
+    <nav>
+      <h2>Índice</h2>
+      <ul>
+        <li><a href="#visao-geral">1. Visão Geral</a></li>
+        <li><a href="#pa">2. Progressão Aritmética (PA)</a></li>
+        <li><a href="#pg">3. Progressão Geométrica (PG)</a></li>
+        <li><a href="#polinomial">4. Sequência Polinomial</a></li>
+        <li><a href="#deteccao">5. Algoritmo de Detecção</a></li>
+        <li><a href="#performance">6. Otimização de Desempenho</a></li>
+        <li><a href="#api">7. API do Motor (engine.js)</a></li>
+        <li><a href="#testes">8. Suíte de Testes</a></li>
+        <li><a href="#executar">9. Como Executar</a></li>
+      </ul>
+    </nav>
+
+    <!-- ─── 1. Visão Geral ─── -->
+    <section id="visao-geral">
+      <h2>1. Visão Geral</h2>
+      <p>
+        A <strong>Câmara do Eco</strong> é um motor de análise de sequências numéricas que detecta
+        automaticamente três tipos de padrões matemáticos e prevê valores futuros:
+      </p>
+      <ul>
+        <li><span class="badge badge-pa">PA</span> — Progressão Aritmética</li>
+        <li><span class="badge badge-pg">PG</span> — Progressão Geométrica</li>
+        <li><span class="badge badge-poli">POLI</span> — Sequência Polinomial (grau 2+)</li>
+      </ul>
+      <p>
+        O motor usa diferenças finitas e análise de razões para classificar automaticamente qualquer
+        sequência fornecida, priorizando os padrões mais simples primeiro.
+      </p>
+    </section>
+
+    <!-- ─── 2. PA ─── -->
+    <section id="pa">
+      <h2>2. Progressão Aritmética (PA)</h2>
+      <p>
+        Uma PA é uma sequência onde a diferença entre termos consecutivos é constante.
+        Chamamos essa diferença de <strong>razão (d)</strong> ou <strong>diferença comum</strong>.
+      </p>
+
+      <div class="formula-box">
+        <span class="label">FÓRMULA DO TERMO GERAL</span>
+        a(n) = a₁ + (n - 1) × d
+      </div>
+
+      <h3>Propriedades</h3>
+      <ul>
+        <li><strong>Diferença constante:</strong> a(n+1) - a(n) = d, para todo n</li>
+        <li><strong>Soma dos n primeiros termos:</strong> S(n) = n × (a₁ + aₙ) / 2</li>
+        <li><strong>Termo médio:</strong> a(k) = (a(k-1) + a(k+1)) / 2</li>
+      </ul>
+
+      <h3>Exemplos no Jogo</h3>
+      <table>
+        <tr><th>Sequência</th><th>d</th><th>Próximo</th></tr>
+        <tr><td>[2, 4, 6, 8]</td><td>+2</td><td>10</td></tr>
+        <tr><td>[30, 24, 18, 12]</td><td>-6</td><td>6</td></tr>
+        <tr><td>[-8, -5, -2, 1]</td><td>+3</td><td>4</td></tr>
+      </table>
+
+      <h3>Detecção</h3>
+      <p>
+        O algoritmo calcula as <em>diferenças finitas de primeira ordem</em> (Δ¹) e verifica
+        se são todas iguais (com tolerância de ε = 10⁻⁹ para ponto flutuante).
+      </p>
+      <pre>Δ¹ = [a₂-a₁, a₃-a₂, ..., aₙ-aₙ₋₁]
+Se todos Δ¹ᵢ ≈ constante → é PA</pre>
+    </section>
+
+    <!-- ─── 3. PG ─── -->
+    <section id="pg">
+      <h2>3. Progressão Geométrica (PG)</h2>
+      <p>
+        Uma PG é uma sequência onde a razão entre termos consecutivos é constante.
+        Chamamos essa razão de <strong>q</strong>.
+      </p>
+
+      <div class="formula-box">
+        <span class="label">FÓRMULA DO TERMO GERAL</span>
+        a(n) = a₁ × q^(n-1)
+      </div>
+
+      <h3>Propriedades</h3>
+      <ul>
+        <li><strong>Razão constante:</strong> a(n+1) / a(n) = q, para todo n (aₙ ≠ 0)</li>
+        <li><strong>Soma infinita (|q| &lt; 1):</strong> S = a₁ / (1 - q)</li>
+        <li><strong>Crescimento:</strong> exponencial se |q| > 1, decrescente se |q| &lt; 1</li>
+      </ul>
+
+      <h3>Exemplos no Jogo</h3>
+      <table>
+        <tr><th>Sequência</th><th>q</th><th>Próximo</th></tr>
+        <tr><td>[3, 6, 12, 24]</td><td>2</td><td>48</td></tr>
+        <tr><td>[2, 6, 18, 54]</td><td>3</td><td>162</td></tr>
+        <tr><td>[256, 128, 64, 32]</td><td>0.5</td><td>16</td></tr>
+      </table>
+
+      <h3>Detecção</h3>
+      <p>
+        Calcula-se a razão a(i+1)/a(i) para cada par consecutivo. Se todas são iguais
+        (e nenhum termo é zero), é PG.
+      </p>
+      <pre>razões = [a₂/a₁, a₃/a₂, ..., aₙ/aₙ₋₁]
+Se todos razõesᵢ ≈ constante E nenhum aᵢ = 0 → é PG</pre>
+
+      <h3>Restrição Importante</h3>
+      <p>
+        Se a sequência é <em>constante</em> (ex: [5, 5, 5]), ela é classificada como PA
+        com d=0 (prioridade sobre PG com q=1), pois PA é o padrão mais simples.
+      </p>
+    </section>
+
+    <!-- ─── 4. Polinomial ─── -->
+    <section id="polinomial">
+      <h2>4. Sequência Polinomial</h2>
+      <p>
+        Uma sequência é polinomial de grau <strong>k</strong> se existir um polinômio p(n) de grau k
+        tal que p(0) = a₀, p(1) = a₁, ..., p(n) = aₙ.
+      </p>
+      <p>
+        Equivalentemente: a k-ésima diferença finita é constante (e a (k-1)-ésima não é).
+      </p>
+
+      <div class="formula-box">
+        <span class="label">INTERPOLAÇÃO DE NEWTON (Diferenças Avançadas)</span>
+        p(x) = Σ C(x, k) × Δᵏ[0]
+        <br>
+        onde C(x,k) = x! / (k! × (x-k)!) = coeficiente binomial
+      </div>
+
+      <h3>Tabela de Diferenças Finitas</h3>
+      <p>Exemplo para a sequência [1, 4, 9, 16, 25] (n²):</p>
+      <pre>Nível 0 (original): 1    4    9   16   25
+Nível 1 (Δ¹):         3    5    7    9
+Nível 2 (Δ²):            2    2    2        ← constante!
+                                               → grau 2</pre>
+
+      <h3>Exemplos no Jogo</h3>
+      <table>
+        <tr><th>Sequência</th><th>Grau</th><th>Padrão</th><th>Próximo</th></tr>
+        <tr><td>[1, 4, 9, 16, 25]</td><td>2</td><td>n²</td><td>36</td></tr>
+        <tr><td>[1, 3, 6, 10, 15]</td><td>2</td><td>n(n+1)/2</td><td>21</td></tr>
+        <tr><td>[1, 8, 27, 64, 125]</td><td>3</td><td>n³</td><td>216</td></tr>
+      </table>
+
+      <h3>Previsão</h3>
+      <p>
+        Uma vez determinados os coeficientes de Newton Δ⁰[0], Δ¹[0], Δ²[0], ..., Δᵏ[0],
+        o próximo valor é calculado avaliando p(n) com x = tamanho da sequência original:
+      </p>
+      <pre>p(x) = Δ⁰[0]×C(x,0) + Δ¹[0]×C(x,1) + Δ²[0]×C(x,2) + ... + Δᵏ[0]×C(x,k)</pre>
+    </section>
+
+    <!-- ─── 5. Detecção ─── -->
+    <section id="deteccao">
+      <h2>5. Algoritmo de Detecção</h2>
+      <p>O motor analisa a sequência na seguinte ordem de prioridade:</p>
+      <ol>
+        <li><strong>PA</strong> — Verifica se Δ¹ é constante (O(n))</li>
+        <li><strong>PG</strong> — Verifica se as razões são constantes (O(n))</li>
+        <li><strong>Polinomial</strong> — Aplica diferenças finitas até grau 10 (O(n×k))</li>
+        <li><strong>Desconhecida</strong> — Nenhum padrão reconhecido</li>
+      </ol>
+
+      <p>
+        A prioridade garante que padrões simples nunca sejam "sobre-classificados".
+        Por exemplo, toda PA é tecnicamente um polinômio de grau 1, mas é reportada como PA
+        por ser a explicação mais simples (princípio da parcimônia / Navalha de Occam).
+      </p>
+
+      <div class="formula-box">
+        <span class="label">PSEUDOCÓDIGO</span>
+        analisarSequencia(seq):
+        &nbsp;&nbsp;se diferencasFinitas(seq) todas iguais → retorna PA
+        &nbsp;&nbsp;se razões(seq) todas iguais → retorna PG
+        &nbsp;&nbsp;para grau = 2..10:
+        &nbsp;&nbsp;&nbsp;&nbsp;se Δᵍʳᵃᵘ(seq) todas iguais → retorna POLI(grau)
+        &nbsp;&nbsp;retorna DESCONHECIDA
+      </div>
+    </section>
+
+    <!-- ─── 6. Performance ─── -->
+    <section id="performance">
+      <h2>6. Otimização de Desempenho</h2>
+
+      <h3>Complexidade</h3>
+      <table>
+        <tr><th>Operação</th><th>Complexidade</th><th>Observação</th></tr>
+        <tr><td>Detecção PA</td><td>O(n)</td><td>Uma passagem linear</td></tr>
+        <tr><td>Detecção PG</td><td>O(n)</td><td>Uma passagem linear</td></tr>
+        <tr><td>Detecção Polinomial</td><td>O(n × k)</td><td>k = grau máximo (10)</td></tr>
+        <tr><td>Previsão (PA/PG)</td><td>O(1)</td><td>Fórmula direta</td></tr>
+        <tr><td>Previsão (Poli)</td><td>O(k)</td><td>Avaliação binomial</td></tr>
+      </table>
+
+      <h3>Estratégias Aplicadas</h3>
+      <ul>
+        <li><strong>Early return:</strong> para no primeiro padrão encontrado (PA > PG > Poli)</li>
+        <li><strong>Pré-alocação de arrays:</strong> evita <code>push</code> em laços críticos</li>
+        <li><strong>Cache de fatorial:</strong> evita recalcular valores já computados</li>
+        <li><strong>Tolerância ε relativa:</strong> comparação robusta para ponto flutuante</li>
+        <li><strong>Limite de grau:</strong> máximo 10 para evitar explosão em sequências ruins</li>
+      </ul>
+
+      <h3>Benchmarks</h3>
+      <pre>PA com 10.000 elementos   → detectada em ~2ms
+PG com 1.000 elementos    → detectada em ~1ms
+Poli grau 2 (500 elem.)   → detectada em ~3ms</pre>
+    </section>
+
+    <!-- ─── 7. API ─── -->
+    <section id="api">
+      <h2>7. API do Motor (engine.js)</h2>
+      <p>
+        O motor exporta um objeto <code>EchoChamberEngine</code> (global no browser,
+        <code>module.exports</code> no Node.js).
+      </p>
+
+      <h3>Funções Principais</h3>
+      <table>
+        <tr><th>Função</th><th>Descrição</th></tr>
+        <tr>
+          <td><code>analisarSequencia(seq)</code></td>
+          <td>Retorna análise completa: tipo, fórmula, parâmetros</td>
+        </tr>
+        <tr>
+          <td><code>preverProximos(seq, n)</code></td>
+          <td>Prevê os próximos <em>n</em> valores (padrão: 1)</td>
+        </tr>
+        <tr>
+          <td><code>gerarSequencia(analise, comprimento)</code></td>
+          <td>Gera sequência a partir da análise detectada</td>
+        </tr>
+        <tr>
+          <td><code>registrarNoHistorico(seq, analise, previsao)</code></td>
+          <td>Adiciona ao histórico global</td>
+        </tr>
+        <tr>
+          <td><code>estatisticasHistorico()</code></td>
+          <td>Retorna estatísticas agregadas</td>
+        </tr>
+      </table>
+
+      <h3>Exemplo de Uso (Node.js)</h3>
+      <pre>const Engine = require('./engine.js');
+
+const resultado = Engine.preverProximos([1, 4, 9, 16, 25]);
+console.log(resultado.valores);    // [36]
+console.log(resultado.analise.tipo); // 'polinomial'
+console.log(resultado.analise.grau); // 2</pre>
+
+      <h3>Exemplo de Uso (Browser)</h3>
+      <pre>&lt;script src="engine.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  const r = EchoChamberEngine.preverProximos([2, 6, 18, 54]);
+  alert('Próximo: ' + r.valores[0]); // 162
+&lt;/script&gt;</pre>
+    </section>
+
+    <!-- ─── 8. Testes ─── -->
+    <section id="testes">
+      <h2>8. Suíte de Testes</h2>
+      <p>
+        A suíte de testes (<code>tests.js</code>) cobre 6 categorias com 40+ asserções:
+      </p>
+      <ol>
+        <li><strong>PA:</strong> básica, negativa, decimal, constante, dois elementos, múltiplas previsões</li>
+        <li><strong>PG:</strong> básica, fracionária, negativa, prioridade PA vs PG</li>
+        <li><strong>Polinomial:</strong> quadrática, cúbica, triangulares, previsão múltipla</li>
+        <li><strong>Validação:</strong> array vazio, NaN, Infinity, tipo errado</li>
+        <li><strong>Utilitários:</strong> binomial, fatorial, diferenças finitas, aproxIgual</li>
+        <li><strong>Desempenho:</strong> PA 10k, PG 1k, Poli 500 — todas &lt; 500ms</li>
+      </ol>
+
+      <h3>Executar Testes</h3>
+      <pre>cd echo-chamber
+node tests.js</pre>
+    </section>
+
+    <!-- ─── 9. Como Executar ─── -->
+    <section id="executar">
+      <h2>9. Como Executar</h2>
+
+      <h3>Pré-requisitos</h3>
+      <ul>
+        <li>Node.js v14+ (para CLI e testes)</li>
+        <li>Navegador moderno (para interface web)</li>
+        <li>Nenhuma dependência externa</li>
+      </ul>
+
+      <h3>Interface Web (Jogo)</h3>
+      <pre>Abra game.html diretamente no navegador
+(duplo-clique ou: start game.html)</pre>
+
+      <h3>CLI Original</h3>
+      <pre>node index.js</pre>
+
+      <h3>Testes Automatizados</h3>
+      <pre>node tests.js</pre>
+
+      <h3>Estrutura do Projeto</h3>
+      <pre>echo-chamber/
+├── engine.js    ← Motor de análise (compartilhado Node + Browser)
+├── game.html    ← Interface web (jogo Castlevania DS)
+├── game.css     ← Estilos visuais
+├── game.js      ← Lógica do jogo web
+├── docs.html    ← Esta documentação
+├── tests.js     ← Suíte de testes (Node.js)
+├── index.js     ← CLI original (demonstração)
+└── README.md    ← Leiame do projeto</pre>
+    </section>
+
+    <footer>
+      <p>Câmara do Eco — Motor de Sequências v2.0</p>
+      <p><a href="game.html">Jogar</a> · <a href="game.html">Voltar ao Jogo</a></p>
+    </footer>
+
+  </div>
+</body>
+</html>

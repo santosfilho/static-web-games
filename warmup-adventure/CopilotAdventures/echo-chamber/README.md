@@ -1,51 +1,96 @@
-# Câmara do Eco — Preditor Mágico de Sequências Numéricas
+# Câmara do Eco — A Maldição dos Números
 
-No coração da Floresta Encantada existe a **Câmara do Eco**, uma caverna mística onde os números sussurram seus segredos. Pronuncie uma progressão aritmética e a câmara ecoa de volta o próximo número do padrão.
+Motor de análise de sequências numéricas com interface web temática (Castlevania DS).
+Detecta automaticamente **PA**, **PG** e **sequências polinomiais** (até grau 10) usando
+diferenças finitas e interpolação de Newton.
 
 ## Pré-requisitos
 
-- [Node.js](https://nodejs.org/) v14 ou superior (sem dependências externas)
+- [Node.js](https://nodejs.org/) v14+ (para CLI e testes)
+- Navegador moderno (para o jogo web)
+- **Nenhuma dependência externa** — 100% offline
 
 ## Como executar
 
 ```bash
-# Navegue até a pasta do projeto
 cd CopilotAdventures/echo-chamber
 
-# Execute a aplicação
+# Interface Web (jogo)
+start game.html          # Windows
+open game.html           # macOS
+
+# CLI original
 node index.js
+
+# Testes automatizados (63 asserções)
+node tests.js
 ```
 
-## O que faz
+## Funcionalidades
 
-1. Valida se a entrada é uma **progressão aritmética** válida (diferença constante entre termos consecutivos).
-2. Prevê o **próximo número** da sequência.
-3. Armazena cada sequência aceita na **memória** da câmara para exibição ao final.
-
-### Exemplo
-
-Sequência de entrada: `[3, 6, 9, 12]`  
-Próximo previsto: **15** (diferença comum = 3)
+| Recurso | Descrição |
+|---|---|
+| **Motor de Análise** | Detecta PA, PG e Polinomial automaticamente |
+| **Previsão** | Prevê N próximos valores de qualquer sequência |
+| **12 Câmaras** | 4 PA + 4 PG + 4 Polinomiais com dificuldade crescente |
+| **Visualização** | Gráfico Canvas da sequência em tempo real |
+| **Histórico** | Registro de todas as tentativas com estatísticas |
+| **Áudio** | Efeitos sonoros chiptune (Web Audio API) |
+| **Documentação** | Página completa com fórmulas e explicações |
 
 ## Estrutura do projeto
 
 ```
 echo-chamber/
-├── index.js   # Toda a lógica da aplicação e casos de teste
-└── README.md  # Este arquivo
+├── engine.js    ← Motor de análise (compartilhado Node + Browser)
+├── game.html    ← Interface web (jogo temático)
+├── game.css     ← Estilos visuais (tema gótico)
+├── game.js      ← Lógica do jogo web
+├── docs.html    ← Documentação matemática completa
+├── tests.js     ← Suíte de testes (63 asserções)
+├── index.js     ← CLI original (demonstração PA)
+└── README.md    ← Este arquivo
 ```
 
-## Casos de teste incluídos
+## Tipos de sequência suportados
 
-| Sequência | Próximo previsto |
-|---|---|
-| `[3, 6, 9, 12]` | 15 |
-| `[2, 4, 6, 8]` | 10 |
-| `[20, 15, 10, 5]` | 0 |
-| `[1.5, 3.0, 4.5, 6.0]` | 7.5 |
-| `[100, 200, 300]` | 400 |
-| `[7, 14]` | 21 |
-| `[5, 5, 5]` | 5 |
-| `[-9, -6, -3]` | 0 |
+### Progressão Aritmética (PA)
+| Sequência | d | Próximo |
+|---|---|---|
+| `[2, 4, 6, 8]` | +2 | 10 |
+| `[30, 24, 18, 12]` | -6 | 6 |
 
-Casos de erro (rejeitados pela câmara): sequências não aritméticas, arrays com elemento único, arrays vazios e valores não finitos.
+### Progressão Geométrica (PG)
+| Sequência | q | Próximo |
+|---|---|---|
+| `[3, 6, 12, 24]` | 2 | 48 |
+| `[256, 128, 64, 32]` | 0.5 | 16 |
+
+### Polinomial
+| Sequência | Grau | Próximo |
+|---|---|---|
+| `[1, 4, 9, 16, 25]` | 2 (n²) | 36 |
+| `[1, 8, 27, 64, 125]` | 3 (n³) | 216 |
+
+## API do Motor
+
+```javascript
+const Engine = require('./engine.js');
+
+// Analisar sequência
+const analise = Engine.analisarSequencia([1, 4, 9, 16, 25]);
+// → { tipo: 'polinomial', grau: 2, ... }
+
+// Prever próximos valores
+const resultado = Engine.preverProximos([3, 6, 12, 24], 3);
+// → { valores: [48, 96, 192], analise: {...} }
+```
+
+## Testes
+
+63 testes cobrindo 7 categorias: PA, PG, Polinomial, Validação, Utilitários, Histórico e Desempenho.
+
+```bash
+node tests.js
+# → RESULTADO: 63/63 testes passaram ✅
+```
