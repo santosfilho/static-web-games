@@ -1,0 +1,657 @@
+/* ═══════════════════════════════════════════════════════════════
+   game.css — Câmara do Eco: A Maldição dos Números
+   Tema visual inspirado em Castlevania para Nintendo DS
+   100% offline — sem dependências externas
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Variáveis de cor e fonte ─────────────────────────────────────────────── */
+:root {
+  --preto:          #07070d;
+  --roxo-escuro:    #130622;
+  --roxo-medio:     #220a3a;
+  --vm-sangue:      #7a0000;
+  --vm-brilho:      #c0392b;
+  --ouro:           #ffd700;
+  --ouro-escuro:    #9a7000;
+  --prata:          #a8a8c0;
+  --branco:         #ececf4;
+  --pedra:          #222232;
+  --pedra-clara:    #32324a;
+  --laranja-chama:  #ff8800;
+  --amarelo-chama:  #ffdd44;
+  --verde-alma:     #00e878;
+  --ds-corpo:       #1a1a2c;
+  --ds-borda:       #0a0a16;
+  --ds-botao:       #28283c;
+  --fonte-pixel: "Courier New", Courier, "Lucida Console", monospace;
+}
+
+/* ─── Reset & base ────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { height: 100%; }
+
+body {
+  height: 100%;
+  font-family: var(--fonte-pixel);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: radial-gradient(ellipse at 50% 30%, #1e0a38 0%, var(--preto) 70%);
+  color: var(--branco);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+/* ─── Telas ────────────────────────────────────────────────────────────────── */
+.tela {
+  display: none;
+  position: fixed;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  animation: fade-in 0.35s ease;
+}
+.tela.ativa { display: flex; }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TELA DE TÍTULO
+   ═══════════════════════════════════════════════════════════════ */
+#tela-titulo {
+  flex-direction: column;
+  background:
+    radial-gradient(ellipse at 50% 25%, #2e0a56 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 90%, #1a0030 0%, transparent 55%),
+    var(--preto);
+}
+
+/* ─── Morcegos ──────────────────────────────────────────────────────────── */
+.morcegos {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 70px;
+  pointer-events: none;
+  overflow: hidden;
+}
+.morcego {
+  position: absolute;
+  font-size: 1.1rem;
+  top: 8px;
+  opacity: 0.55;
+  animation: voo linear infinite;
+}
+.m1 { animation-duration: 9s;  animation-delay: 0s;   }
+.m2 { animation-duration: 13s; animation-delay: -5s;  }
+.m3 { animation-duration: 10s; animation-delay: -8s;  }
+
+@keyframes voo {
+  0%   { left: -6%;   transform: translateY(0px);   }
+  25%  { transform: translateY(-14px); }
+  60%  { transform: translateY(7px);  }
+  90%  { transform: translateY(-9px); }
+  100% { left: 106%;  transform: translateY(0px);   }
+}
+
+/* ─── Velas ─────────────────────────────────────────────────────────────── */
+.velas-linha {
+  display: flex;
+  gap: 36px;
+  justify-content: center;
+  position: absolute;
+  pointer-events: none;
+}
+.velas-topo   { top: 18px; }
+.velas-rodape { bottom: 18px; gap: 52px; }
+
+.vela {
+  width: 9px;
+  height: 34px;
+  background: linear-gradient(180deg, #e8d090 0%, #a07818 100%);
+  border-radius: 2px 2px 0 0;
+  position: relative;
+  box-shadow: 0 0 6px rgba(255,200,0,0.15);
+}
+.chama {
+  position: absolute;
+  left: 50%;
+  top: -17px;
+  transform: translateX(-50%);
+  width: 9px;
+  height: 14px;
+  background: radial-gradient(
+    ellipse at 50% 100%,
+    var(--amarelo-chama) 0%,
+    var(--laranja-chama) 55%,
+    transparent 100%
+  );
+  border-radius: 50% 50% 30% 30%;
+  filter: blur(0.7px);
+  animation: tremular 0.13s infinite alternate ease-in-out;
+  transform-origin: 50% 100%;
+}
+@keyframes tremular {
+  0%   { transform: translateX(-50%) rotate(-3deg) scaleY(1.00); opacity: 0.95; }
+  33%  { transform: translateX(-50%) rotate( 2deg) scaleY(1.08); opacity: 1;    }
+  66%  { transform: translateX(-50%) rotate(-1deg) scaleY(0.94); opacity: 0.90; }
+  100% { transform: translateX(-50%) rotate( 3deg) scaleY(1.05); opacity: 1;    }
+}
+
+/* ─── Conteúdo do título ─────────────────────────────────────────────────── */
+.titulo-conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  z-index: 1;
+  padding: 16px;
+  text-align: center;
+}
+.titulo-jogo {
+  font-size: clamp(1.7rem, 5.5vw, 3rem);
+  color: var(--vm-brilho);
+  line-height: 1.45;
+  letter-spacing: 6px;
+  text-shadow: 0 0 28px rgba(192,57,43,0.85), 3px 3px 0 #000;
+  animation: pulsar-titulo 3s ease-in-out infinite;
+}
+@keyframes pulsar-titulo {
+  0%, 100% { text-shadow: 0 0 22px rgba(192,57,43,0.7), 3px 3px 0 #000; }
+  50%       { text-shadow: 0 0 50px rgba(192,57,43,1),   3px 3px 0 #000; }
+}
+.subtitulo-jogo {
+  font-size: clamp(0.45rem, 1.3vw, 0.65rem);
+  color: var(--prata);
+  letter-spacing: 3px;
+}
+.titulo-divisor {
+  color: var(--ouro-escuro);
+  font-size: 1rem;
+  letter-spacing: 14px;
+}
+.titulo-historia {
+  font-size: clamp(0.38rem, 1.05vw, 0.52rem);
+  color: #7878a8;
+  line-height: 2.5;
+  max-width: 460px;
+}
+
+/* ─── Botão gótico ──────────────────────────────────────────────────────── */
+.btn-gotico {
+  padding: 13px 26px;
+  background: var(--vm-sangue);
+  color: var(--ouro);
+  border: 2px solid var(--ouro-escuro);
+  font-family: var(--fonte-pixel);
+  font-weight: 700;
+  font-size: clamp(0.48rem, 1.3vw, 0.65rem);
+  letter-spacing: 2px;
+  cursor: pointer;
+  line-height: 1.8;
+  box-shadow: 0 0 18px rgba(255,215,0,0.2), inset 0 0 10px rgba(0,0,0,0.4);
+  transition: all 0.14s ease;
+}
+.btn-gotico:hover {
+  background: #900000;
+  box-shadow: 0 0 32px rgba(255,215,0,0.45), inset 0 0 10px rgba(0,0,0,0.4);
+  transform: scale(1.04);
+}
+.btn-gotico:active { transform: scale(0.97); }
+
+/* ═══════════════════════════════════════════════════════════════
+   TELA DO JOGO — Console DS
+   ═══════════════════════════════════════════════════════════════ */
+#tela-jogo {
+  background:
+    radial-gradient(ellipse at 50% 50%, #180a2e 0%, var(--preto) 80%);
+  padding: 16px 8px;
+  overflow-y: auto;
+}
+
+.ds-console {
+  width: min(460px, 96vw);
+  display: flex;
+  flex-direction: column;
+  background: var(--ds-corpo);
+  border-radius: 18px 18px 12px 12px;
+  box-shadow:
+    0 0 0 3px var(--ds-borda),
+    0 0 0 6px #242436,
+    0 24px 56px rgba(0,0,0,0.95),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+/* ─── Metade superior ───────────────────────────────────────────────────── */
+.ds-metade-superior {
+  padding: 12px 14px 0;
+  border-radius: 18px 18px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.ds-camera {
+  width: 6px;
+  height: 6px;
+  background: #0a0a18;
+  border: 1px solid #18182a;
+  border-radius: 50%;
+  align-self: center;
+}
+
+/* ─── Telas (superior e inferior) ─────────────────────────────────────── */
+.ds-tela {
+  border: 4px solid #070712;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+/* Efeito scanlines (simula tela LCD) */
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(0,0,0,0.07) 2px,
+    rgba(0,0,0,0.07) 4px
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+.conteudo-superior {
+  background: linear-gradient(180deg, #0e0620 0%, #09091a 100%);
+  padding: 12px;
+  min-height: 230px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ─── Cabeçalho da sala ──────────────────────────────────────────────── */
+.sala-cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--ouro-escuro);
+}
+.sala-badge {
+  font-size: 0.38rem;
+  color: var(--ouro-escuro);
+  letter-spacing: 2px;
+}
+.sala-nome {
+  font-size: clamp(0.48rem, 1.5vw, 0.66rem);
+  color: var(--vm-brilho);
+  text-shadow: 0 0 8px rgba(192,57,43,0.55);
+  letter-spacing: 2px;
+}
+.sala-historia {
+  font-size: clamp(0.32rem, 0.92vw, 0.44rem);
+  color: #6a6a90;
+  line-height: 2.1;
+}
+
+/* ─── Área do selo / puzzle ────────────────────────────────────────── */
+.area-selo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border: 1px solid var(--ouro-escuro);
+  background: rgba(0,0,0,0.3);
+  position: relative;
+}
+.area-selo::before {
+  content: '◆';
+  position: absolute;
+  top: 3px; left: 5px;
+  color: var(--ouro-escuro);
+  font-size: 0.45rem;
+}
+.area-selo::after {
+  content: '◆';
+  position: absolute;
+  top: 3px; right: 5px;
+  color: var(--ouro-escuro);
+  font-size: 0.45rem;
+}
+.selo-titulo {
+  font-size: 0.32rem;
+  color: var(--ouro-escuro);
+  letter-spacing: 2px;
+}
+.sequencia-linha {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.tile {
+  background: linear-gradient(135deg, var(--pedra-clara), var(--pedra));
+  border: 2px solid var(--ouro-escuro);
+  color: var(--amarelo-chama);
+  font-family: var(--fonte-pixel);
+  font-weight: 700;
+  font-size: clamp(0.6rem, 2vw, 0.88rem);
+  width: clamp(42px, 9.5vw, 56px);
+  height: clamp(42px, 9.5vw, 56px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 8px rgba(255,215,0,0.12), inset 0 0 6px rgba(0,0,0,0.45);
+  animation: aparecer 0.28s ease-out backwards;
+}
+.tile-desconhecido {
+  background: linear-gradient(135deg, #280010, #180008);
+  border-color: var(--vm-brilho);
+  color: var(--vm-brilho);
+  box-shadow: 0 0 12px rgba(192,57,43,0.4);
+  animation: pulsar-interrogacao 1.5s ease-in-out infinite;
+}
+.seta-sequencia {
+  color: var(--ouro-escuro);
+  font-size: 0.9rem;
+}
+.proximo-indicador {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.seta-indicador {
+  font-size: 1rem;
+  color: var(--ouro-escuro);
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(-16px) scale(0.8); }
+  to   { opacity: 1; transform: translateY(0)     scale(1);   }
+}
+@keyframes pulsar-interrogacao {
+  0%, 100% { opacity: 1;   box-shadow: 0 0 12px rgba(192,57,43,0.4); }
+  50%       { opacity: 0.65; box-shadow: 0 0 24px rgba(192,57,43,0.8); }
+}
+
+/* ─── Dobradiça ──────────────────────────────────────────────────────── */
+.ds-dobradica {
+  height: 18px;
+  background: linear-gradient(180deg, #0a0a16 0%, #1c1c2c 50%, #0a0a16 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ds-dobradica-interna {
+  width: 55%;
+  height: 8px;
+  background: linear-gradient(180deg, #07070f 0%, #161626 50%, #07070f 100%);
+  border-radius: 4px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.7);
+}
+
+/* ─── Metade inferior ────────────────────────────────────────────────── */
+.ds-metade-inferior {
+  padding: 0 14px 14px;
+  border-radius: 0 0 12px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.conteudo-inferior {
+  background: linear-gradient(180deg, #09091a 0%, #0e0620 100%);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-height: 155px;
+}
+
+/* ─── HUD ──────────────────────────────────────────────────────────── */
+.hud-linha {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--ouro-escuro);
+}
+.hud-bloco {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+.hud-bloco-centro { align-items: center; }
+.hud-bloco-direita { align-items: flex-end; }
+.hud-rotulo {
+  font-size: 0.3rem;
+  color: var(--ouro-escuro);
+  letter-spacing: 2px;
+}
+.coracoes-linha {
+  display: flex;
+  gap: 3px;
+}
+.coracao {
+  font-size: 0.85rem;
+  transition: all 0.3s;
+  filter: drop-shadow(0 0 3px rgba(255,0,0,0.5));
+}
+.coracao.perdido {
+  filter: grayscale(1) brightness(0.22);
+  transform: scale(0.72);
+}
+.pontos-display {
+  font-size: clamp(0.55rem, 1.6vw, 0.7rem);
+  color: var(--ouro);
+  text-shadow: 0 0 8px rgba(255,215,0,0.45);
+}
+.btn-dica {
+  background: transparent;
+  border: 1px solid var(--ouro-escuro);
+  color: var(--ouro);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  transition: all 0.14s;
+  line-height: 1;
+}
+.btn-dica:hover:not(:disabled) {
+  background: rgba(255,215,0,0.12);
+  box-shadow: 0 0 8px rgba(255,215,0,0.3);
+}
+.btn-dica:disabled {
+  opacity: 0.28;
+  cursor: not-allowed;
+}
+
+/* ─── Input de resposta ──────────────────────────────────────────────── */
+.input-linha {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+.input-resposta {
+  flex: 1;
+  background: #05050e;
+  border: 2px solid var(--ouro-escuro);
+  color: var(--amarelo-chama);
+  font-family: var(--fonte-pixel);
+  font-weight: 700;
+  font-size: clamp(0.7rem, 2vw, 0.9rem);
+  padding: 8px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input-resposta:focus {
+  border-color: var(--ouro);
+  box-shadow: 0 0 14px rgba(255,215,0,0.28);
+}
+/* Remove setas do input[type=number] */
+.input-resposta::-webkit-inner-spin-button,
+.input-resposta::-webkit-outer-spin-button { -webkit-appearance: none; }
+.input-resposta[type=number] { -moz-appearance: textfield; appearance: textfield; }
+
+.btn-enviar {
+  background: var(--vm-sangue);
+  color: var(--ouro);
+  border: 2px solid var(--ouro-escuro);
+  font-family: var(--fonte-pixel);
+  font-weight: 700;
+  font-size: 0.38rem;
+  letter-spacing: 1px;
+  line-height: 1.9;
+  cursor: pointer;
+  padding: 6px 10px;
+  transition: all 0.14s;
+}
+.btn-enviar:hover {
+  background: #900000;
+  box-shadow: 0 0 14px rgba(255,215,0,0.32);
+}
+.btn-enviar:active { transform: scale(0.95); }
+
+/* ─── Feedback ─────────────────────────────────────────────────────── */
+.feedback {
+  font-size: clamp(0.3rem, 0.88vw, 0.42rem);
+  min-height: 1.6em;
+  text-align: center;
+  line-height: 2.1;
+}
+.feedback.correto { color: var(--verde-alma); }
+.feedback.errado  { color: var(--vm-brilho);  }
+.feedback.dica    { color: var(--prata);       }
+
+/* ─── Botões decorativos do DS ───────────────────────────────────────── */
+.ds-controles {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 8px;
+  margin-top: 2px;
+}
+.ds-dpad {
+  position: relative;
+  width: 34px;
+  height: 34px;
+}
+.dpad-h, .dpad-v {
+  position: absolute;
+  background: var(--ds-botao);
+  border-radius: 2px;
+}
+.dpad-h { width: 34px; height: 11px; top: 11px; left: 0; }
+.dpad-v { width: 11px; height: 34px; top: 0; left: 11px; }
+
+.ds-botoes-acao {
+  display: flex;
+  gap: 6px;
+}
+.ds-btn {
+  width: 18px;
+  height: 18px;
+  background: var(--ds-botao);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.38rem;
+  color: #404058;
+  font-family: var(--fonte-pixel);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TELAS DE OVERLAY (GAME OVER / VITÓRIA)
+   ═══════════════════════════════════════════════════════════════ */
+#tela-gameover {
+  background:
+    radial-gradient(ellipse at 50% 40%, #380010 0%, var(--preto) 65%);
+  flex-direction: column;
+}
+#tela-vitoria {
+  background:
+    radial-gradient(ellipse at 50% 40%, #1a1200 0%, var(--preto) 65%);
+  flex-direction: column;
+}
+
+.painel-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+  padding: 40px 30px;
+  background: rgba(6, 0, 14, 0.96);
+  border: 2px solid var(--ouro-escuro);
+  max-width: 440px;
+  width: 92%;
+  box-shadow: 0 0 60px rgba(0,0,0,0.95);
+}
+.overlay-icone {
+  font-size: 3.5rem;
+  animation: girar 3s linear infinite;
+}
+.icone-vitoria { animation: boiar 1.8s ease-in-out infinite !important; }
+
+@keyframes girar { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes boiar {
+  0%, 100% { transform: translateY(0);   }
+  50%       { transform: translateY(-12px); }
+}
+
+.overlay-titulo {
+  font-size: clamp(1rem, 3vw, 1.6rem);
+  letter-spacing: 4px;
+}
+.overlay-titulo.vermelho {
+  color: var(--vm-brilho);
+  text-shadow: 0 0 22px rgba(192,57,43,0.75);
+}
+.overlay-titulo.ouro {
+  color: var(--ouro);
+  text-shadow: 0 0 22px rgba(255,215,0,0.75);
+}
+.overlay-texto {
+  font-size: clamp(0.36rem, 1.05vw, 0.5rem);
+  color: #7878a8;
+  line-height: 2.4;
+}
+.overlay-pontos {
+  font-size: clamp(0.42rem, 1.2vw, 0.6rem);
+  color: var(--ouro);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMAÇÕES DE JOGO
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes flash-correto {
+  0%, 100% { background: linear-gradient(180deg, #0e0620 0%, #09091a 100%); }
+  50%       { background: linear-gradient(180deg, #003820 0%, #001810 100%); }
+}
+@keyframes flash-errado {
+  0%, 100% { background: linear-gradient(180deg, #0e0620 0%, #09091a 100%); }
+  50%       { background: linear-gradient(180deg, #3a0012 0%, #1a0008 100%); }
+}
+.conteudo-superior.flash-correto { animation: flash-correto 0.4s ease; }
+.conteudo-superior.flash-errado  { animation: flash-errado  0.4s ease; }
+
+@keyframes pontos-bump {
+  0%   { transform: scale(1);   color: var(--ouro); }
+  50%  { transform: scale(1.5); color: #fff; }
+  100% { transform: scale(1);   color: var(--ouro); }
+}
+.pontos-display.bump { animation: pontos-bump 0.3s ease-out; }

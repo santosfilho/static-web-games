@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Câmara do Eco: A Maldição dos Números</title>
+  <link rel="stylesheet" href="game.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════
+       TELA DE TÍTULO
+       ══════════════════════════════════════════════════════════ -->
+  <div id="tela-titulo" class="tela ativa">
+    <div class="morcegos" aria-hidden="true">
+      <span class="morcego m1">🦇</span>
+      <span class="morcego m2">🦇</span>
+      <span class="morcego m3">🦇</span>
+    </div>
+
+    <div class="velas-linha velas-topo" aria-hidden="true">
+      <div class="vela"><div class="chama"></div></div>
+      <div class="vela"><div class="chama"></div></div>
+      <div class="vela"><div class="chama"></div></div>
+    </div>
+
+    <div class="titulo-conteudo">
+      <h1 class="titulo-jogo">CÂMARA<br>DO ECO</h1>
+      <p class="subtitulo-jogo">✦ A Maldição dos Números ✦</p>
+      <div class="titulo-divisor">⚔&nbsp;&nbsp;&nbsp;⚔</div>
+      <p class="titulo-historia">
+        O Castelo de Drácula ressurge entre as sombras.<br>
+        Selos mágicos bloqueiam cada câmara.<br>
+        Decifre as sequências numéricas e avance.<br>
+        Apenas o digno pode derrotar o senhor das trevas.
+      </p>
+      <button class="btn-gotico" id="btn-iniciar">▶ INICIAR JORNADA</button>
+    </div>
+
+    <div class="velas-linha velas-rodape" aria-hidden="true">
+      <div class="vela"><div class="chama"></div></div>
+      <div class="vela"><div class="chama"></div></div>
+      <div class="vela"><div class="chama"></div></div>
+      <div class="vela"><div class="chama"></div></div>
+      <div class="vela"><div class="chama"></div></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       TELA DO JOGO — Console no estilo Nintendo DS
+       ══════════════════════════════════════════════════════════ -->
+  <div id="tela-jogo" class="tela">
+    <div class="ds-console">
+
+      <!-- Metade superior (tela de cima) -->
+      <div class="ds-metade-superior">
+        <div class="ds-camera" aria-hidden="true"></div>
+        <div class="ds-tela ds-tela-superior">
+          <div class="scanlines" aria-hidden="true"></div>
+          <div class="conteudo-superior" id="conteudo-superior">
+
+            <div class="sala-cabecalho">
+              <span class="sala-badge" id="sala-badge">CÂMARA 1 / 8</span>
+              <span class="sala-nome" id="sala-nome">—</span>
+            </div>
+
+            <div class="sala-historia" id="sala-historia">...</div>
+
+            <div class="area-selo">
+              <div class="selo-titulo">✦ SEQUÊNCIA MALDITA ✦</div>
+              <div class="sequencia-linha" id="sequencia-display"></div>
+              <div class="proximo-indicador">
+                <span class="seta-indicador">›</span>
+                <div class="tile tile-desconhecido">?</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Dobradiça -->
+      <div class="ds-dobradica" aria-hidden="true">
+        <div class="ds-dobradica-interna"></div>
+      </div>
+
+      <!-- Metade inferior (tela de baixo + controles decorativos) -->
+      <div class="ds-metade-inferior">
+        <div class="ds-tela ds-tela-inferior">
+          <div class="scanlines" aria-hidden="true"></div>
+          <div class="conteudo-inferior">
+
+            <!-- HUD -->
+            <div class="hud-linha">
+              <div class="hud-bloco">
+                <div class="hud-rotulo">HP</div>
+                <div class="coracoes-linha" id="coracoes-display"></div>
+              </div>
+              <div class="hud-bloco hud-bloco-centro">
+                <div class="hud-rotulo">PONTOS</div>
+                <div class="pontos-display" id="pontos-display">00000</div>
+              </div>
+              <div class="hud-bloco hud-bloco-direita">
+                <div class="hud-rotulo">DICA</div>
+                <button class="btn-dica" id="btn-dica" title="Revelar a diferença comum">💡</button>
+              </div>
+            </div>
+
+            <!-- Input de resposta -->
+            <div class="input-linha">
+              <input
+                type="number"
+                id="input-resposta"
+                class="input-resposta"
+                placeholder="?"
+                step="any"
+                autocomplete="off"
+                aria-label="Digite o próximo número da sequência"
+              />
+              <button class="btn-enviar" id="btn-enviar">QUEBRAR<br>SELO ⚡</button>
+            </div>
+
+            <!-- Feedback -->
+            <div class="feedback" id="feedback" aria-live="polite"></div>
+
+          </div>
+        </div>
+
+        <!-- Botões decorativos do DS -->
+        <div class="ds-controles" aria-hidden="true">
+          <div class="ds-dpad">
+            <div class="dpad-h"></div>
+            <div class="dpad-v"></div>
+          </div>
+          <div class="ds-botoes-acao">
+            <span class="ds-btn ds-btn-a">A</span>
+            <span class="ds-btn ds-btn-b">B</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.ds-console -->
+  </div><!-- /#tela-jogo -->
+
+  <!-- ══════════════════════════════════════════════════════════
+       GAME OVER
+       ══════════════════════════════════════════════════════════ -->
+  <div id="tela-gameover" class="tela">
+    <div class="painel-overlay">
+      <div class="overlay-icone">💀</div>
+      <h2 class="overlay-titulo vermelho">GAME OVER</h2>
+      <p class="overlay-texto">
+        Drácula triunfou sobre você...<br>
+        O castelo permanece nas trevas.
+      </p>
+      <p class="overlay-pontos">
+        Pontuação: <span id="gameover-pontos">00000</span>
+      </p>
+      <button class="btn-gotico" id="btn-reiniciar">↺ TENTAR NOVAMENTE</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════
+       VITÓRIA
+       ══════════════════════════════════════════════════════════ -->
+  <div id="tela-vitoria" class="tela">
+    <div class="painel-overlay">
+      <div class="overlay-icone icone-vitoria">🏆</div>
+      <h2 class="overlay-titulo ouro">VITÓRIA!</h2>
+      <p class="overlay-texto">
+        O castelo foi purificado!<br>
+        Drácula foi derrotado para sempre!
+      </p>
+      <p class="overlay-pontos">
+        Pontuação Final: <span id="vitoria-pontos">00000</span>
+      </p>
+      <button class="btn-gotico" id="btn-jogar-novamente">▶ JOGAR NOVAMENTE</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
