@@ -165,31 +165,31 @@ body {
   50%       { text-shadow: 0 0 50px rgba(192,57,43,1),   3px 3px 0 #000; }
 }
 .subtitulo-jogo {
-  font-size: clamp(0.45rem, 1.3vw, 0.65rem);
+  font-size: clamp(0.7rem, 2vw, 0.9rem);
   color: var(--prata);
   letter-spacing: 3px;
 }
 .titulo-divisor {
   color: var(--ouro-escuro);
-  font-size: 1rem;
+  font-size: 1.2rem;
   letter-spacing: 14px;
 }
 .titulo-historia {
-  font-size: clamp(0.38rem, 1.05vw, 0.52rem);
+  font-size: clamp(0.7rem, 1.8vw, 0.9rem);
   color: #7878a8;
-  line-height: 2.5;
-  max-width: 460px;
+  line-height: 2.2;
+  max-width: 500px;
 }
 
 /* ─── Botão gótico ──────────────────────────────────────────────────────── */
 .btn-gotico {
-  padding: 13px 26px;
+  padding: 16px 32px;
   background: var(--vm-sangue);
   color: var(--ouro);
   border: 2px solid var(--ouro-escuro);
   font-family: var(--fonte-pixel);
   font-weight: 700;
-  font-size: clamp(0.48rem, 1.3vw, 0.65rem);
+  font-size: clamp(0.8rem, 1.8vw, 1rem);
   letter-spacing: 2px;
   cursor: pointer;
   line-height: 1.8;
@@ -286,20 +286,20 @@ body {
   border-bottom: 1px solid var(--ouro-escuro);
 }
 .sala-badge {
-  font-size: 0.38rem;
+  font-size: 0.7rem;
   color: var(--ouro-escuro);
   letter-spacing: 2px;
 }
 .sala-nome {
-  font-size: clamp(0.48rem, 1.5vw, 0.66rem);
+  font-size: clamp(0.9rem, 2.2vw, 1.1rem);
   color: var(--vm-brilho);
   text-shadow: 0 0 8px rgba(192,57,43,0.55);
   letter-spacing: 2px;
 }
 .sala-historia {
-  font-size: clamp(0.32rem, 0.92vw, 0.44rem);
+  font-size: clamp(0.7rem, 1.5vw, 0.85rem);
   color: #6a6a90;
-  line-height: 2.1;
+  line-height: 1.8;
 }
 
 /* ─── Área do selo / puzzle ────────────────────────────────────────── */
@@ -319,17 +319,17 @@ body {
   position: absolute;
   top: 3px; left: 5px;
   color: var(--ouro-escuro);
-  font-size: 0.45rem;
+  font-size: 0.8rem;
 }
 .area-selo::after {
   content: '◆';
   position: absolute;
   top: 3px; right: 5px;
   color: var(--ouro-escuro);
-  font-size: 0.45rem;
+  font-size: 0.8rem;
 }
 .selo-titulo {
-  font-size: 0.32rem;
+  font-size: 0.65rem;
   color: var(--ouro-escuro);
   letter-spacing: 2px;
 }
@@ -436,7 +436,7 @@ body {
 .hud-bloco-centro { align-items: center; }
 .hud-bloco-direita { align-items: flex-end; }
 .hud-rotulo {
-  font-size: 0.3rem;
+  font-size: 0.65rem;
   color: var(--ouro-escuro);
   letter-spacing: 2px;
 }
@@ -445,7 +445,7 @@ body {
   gap: 3px;
 }
 .coracao {
-  font-size: 0.85rem;
+  font-size: 1.1rem;
   transition: all 0.3s;
   filter: drop-shadow(0 0 3px rgba(255,0,0,0.5));
 }
@@ -454,7 +454,7 @@ body {
   transform: scale(0.72);
 }
 .pontos-display {
-  font-size: clamp(0.55rem, 1.6vw, 0.7rem);
+  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
   color: var(--ouro);
   text-shadow: 0 0 8px rgba(255,215,0,0.45);
 }
@@ -462,9 +462,9 @@ body {
   background: transparent;
   border: 1px solid var(--ouro-escuro);
   color: var(--ouro);
-  font-size: 0.75rem;
+  font-size: 1rem;
   cursor: pointer;
-  padding: 2px 6px;
+  padding: 4px 8px;
   transition: all 0.14s;
   line-height: 1;
 }
@@ -511,11 +511,11 @@ body {
   border: 2px solid var(--ouro-escuro);
   font-family: var(--fonte-pixel);
   font-weight: 700;
-  font-size: 0.38rem;
+  font-size: 0.6rem;
   letter-spacing: 1px;
-  line-height: 1.9;
+  line-height: 1.5;
   cursor: pointer;
-  padding: 6px 10px;
+  padding: 6px 14px;
   transition: all 0.14s;
 }
 .btn-enviar:hover {
@@ -526,10 +526,10 @@ body {
 
 /* ─── Feedback ─────────────────────────────────────────────────────── */
 .feedback {
-  font-size: clamp(0.3rem, 0.88vw, 0.42rem);
-  min-height: 1.6em;
+  font-size: clamp(0.65rem, 1.3vw, 0.8rem);
+  min-height: 1.8em;
   text-align: center;
-  line-height: 2.1;
+  line-height: 1.6;
 }
 .feedback.correto { color: var(--verde-alma); }
 .feedback.errado  { color: var(--vm-brilho);  }
@@ -569,7 +569,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.38rem;
+  font-size: 0.6rem;
   color: #404058;
   font-family: var(--fonte-pixel);
 }
